@@ -105,13 +105,14 @@ class Graph:
         qq.enqueue([starting_vertex])
         while qq.size() > 0:
             path = qq.dequeue()
-            node = path[-1]
-        if not visited:
-            if node == destination_vertex:
+            vertex = path[-1]
+        if vertex is not destination_vertex:
                 return path
-            for neighbour in self.vertices[node]:
+        if vertex  not in visited:
+            visited.add(vertex)
+        for next_vert in self.vertices[vertex]:
                 new_path = list(path)
-                new_path.append(neighbour)
+                new_path.append(next_vert)
                 qq.enqueue(new_path)
                 
 
