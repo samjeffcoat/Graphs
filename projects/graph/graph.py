@@ -11,23 +11,67 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex]= set()
+       
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
+        else:
+            raise IndexError("Can not create edge based on given vertices")
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+                    #BFT Pseudocode
+
+
+            #Create a queue
+        qq = Queue() 
+            #Create list of visited nodes
+        visited = set()
+            #Put starting node in the queue
+        qq.enqueue(starting_vertex)
+            #While: queue not empty
+        while qq.size() > 0:
+            #Pop first node out of queue
+            vertex = qq.dequeue()
+            #If not visited
+            if vertex not in visited:
+                visited.add(vertex)
+                print(vertex)
+            #Mark as visited
+            #Get adjacent edges and add to list
+                for next_vert in self.vertices[vertex]:
+                    qq.enqueue(next_vert)
+            #Goto top of loop
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
+        #Make a stack
+        stack = Stack()
+        #Make visited list
+        visited = set()
+        #Add first node to stack
+        stack.push(starting_vertex)
+        #While stack not empty:
+        while stack.size()> 0: 
+        #Pop top item
+            vertex= stack.pop()
+        #if not visited:
+            if vertex not in visited:
+        #Mark as visited
+                visited.add(vertex)
+                print(vertex)
+                for next_vert in self.vertices[vertex]:
+                        stack.push(next_vert)
+        #Get adjacent and add to stack
+
         pass  # TODO
     def dft_recursive(self, starting_vertex):
         """
@@ -89,6 +133,7 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("starting DFT")
     graph.dft(1)
 
     '''
@@ -106,6 +151,7 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
+    print("Starting BFT")
     graph.bft(1)
 
     '''
