@@ -82,21 +82,38 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        
+        """
         if not visited:
             visited.add(starting_vertex)
             print(starting_vertex)
         for edge in self.vertices[starting_vertex]:
             self.dft_recursive(edge, visited)
-      
-
+        """
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        # implement our quee
+        # Create list of visited nodes
+        # Put starting node in the queue
+        # While: queue not empty
+
+        qq = Queue()
+        visited = set()
+        qq.enqueue([starting_vertex])
+        while qq.size() > 0:
+            path = qq.dequeue()
+            node = path[-1]
+        if not visited:
+            if node == destination_vertex:
+                return path
+            for neighbour in self.vertices[node]:
+                new_path = list(path)
+                new_path.append(neighbour)
+                qq.enqueue(new_path)
+                
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -175,7 +192,9 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print(graph.bfs(1, 6))
+
+    print("Starting BFS")
+    (graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
