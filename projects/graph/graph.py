@@ -82,13 +82,14 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        """
-        if not visited:
-            visited.add(starting_vertex)
-            print(starting_vertex)
+
+        if visited is None:
+            visited = set()
+        print(starting_vertex)
+        visited.add(starting_vertex)
         for edge in self.vertices[starting_vertex]:
-            self.dft_recursive(edge, visited)
-        """
+            if edge not in visited:
+                self.dft_recursive(edge, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -107,15 +108,14 @@ class Graph:
         while qq.size() > 0:
             path = qq.dequeue()
             vertex = path[-1]
-        if vertex is not destination_vertex:
-            return path
-        if vertex not in visited:
-            visited.add(vertex)
-            print('BFS:', vertex)
-        for next_vert in self.vertices[vertex]:
-            new_path = list(path)
-            new_path.append(next_vert)
-            qq.enqueue(new_path)
+            if vertex not in visited:
+                if vertex == destination_vertex:
+                    return path
+                visited.add(vertex)
+                for next_vert in self.vertices[vertex]:
+                    new_path = list(path)
+                    new_path.append(next_vert)
+                    qq.enqueue(new_path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -124,16 +124,17 @@ class Graph:
         depth-first order.
         """
         stack = Stack()
-        visited =set()
+        visited = set()
         stack.push([starting_vertex])
-        while stack.size > 0:
-            path= stack.pop()
-            vertex= path[-1]
+        while stack.size() > 0:
+            path = stack.pop()
+            vertex = path[-1]
             if vertex not in visited:
-                if vertex== destination_vertex:
+                if vertex == destination_vertex:
                     return path
+                visited.add(vertex)
                 for next_vert in self.vertices[vertex]:
-                    new_path = path[:]
+                    new_path = list(path)
                     new_path.append(next_vert)
                     stack.push(new_path)
 
@@ -200,6 +201,7 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("Starting recursive bft")
     graph.dft_recursive(1)
 
     '''
@@ -208,11 +210,12 @@ if __name__ == '__main__':
     '''
 
     print("Starting BFS")
-    (graph.bfs(1, 6))
+    print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
+    print("Starting DFS")
     print(graph.dfs(1, 6))
